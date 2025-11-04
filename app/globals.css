@@ -79,6 +79,10 @@
   --ring: oklch(0.556 0 0);
 }
 
+@theme {
+  --breakpoint-xs: 23.44rem;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

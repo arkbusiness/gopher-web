@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { INTER_CLASS } from "@/styles";
 import NextTopLoader from "nextjs-toploader";
 import { ARK_META } from "@/constants";
+import { Header } from "@/features/navigation";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -18,6 +19,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${INTER_CLASS} antialiased`}>
         <NextTopLoader color="var(--tertiary)" />
+        <Header />
         <main className="relative">{children}</main>
       </body>
     </html>
