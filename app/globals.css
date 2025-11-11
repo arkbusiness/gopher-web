@@ -22,6 +22,9 @@
   --color-popover: var(--popover);
   --color-neutral: var(--neutral);
   --color-neutral-foreground: var(--neutral-foreground);
+  --color-highlight: var(--highlight);
+  --color-warm: var(--warm);
+  --color-highlight-foreground: var(--highlight-foreground);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
   --radius-sm: calc(var(--radius) - 4px);
@@ -34,9 +37,15 @@
 }
 
 :root {
+  /* Remove Extra Font Synthesis */
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
   --radius: 0.625rem;
   --background: #fff;
-  --foreground: #737373;
+  --foreground: #535862;
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
@@ -45,11 +54,14 @@
   --primary-foreground: oklch(0.985 0 0);
   --secondary: #8f3600;
   --secondary-foreground: oklch(0.205 0 0);
+  --highlight: #faefe8;
+  --highlight-foreground: #535862;
+  --warm: #ffebdc;
   --neutral: #cc5500;
   --neutral-foreground: #fff;
   --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
+  --accent: #f7f7f7;
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.922 0 0);
@@ -67,8 +79,11 @@
   --primary-foreground: oklch(0.205 0 0);
   --secondary: #8f3600;
   --secondary-foreground: oklch(0.985 0 0);
+  --highlight: #faefe8;
+  --highlight-foreground: #535862;
   --neutral: #cc5500;
   --neutral-foreground: #fff;
+  --warm: #ffebdc;
   --muted: oklch(0.269 0 0);
   --muted-foreground: oklch(0.708 0 0);
   --accent: oklch(0.269 0 0);
@@ -85,8 +100,10 @@
 
 @layer base {
   * {
+    scroll-behavior: smooth;
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -99,5 +116,28 @@
 
   button {
     cursor: pointer;
+  }
+
+  .react-datepicker__input-container input {
+    display: flex;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    width: 100%;
+    border-width: 1px;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-right: 0.75rem;
+    background-color: var(--background);
+    height: 100%;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    outline-offset: 0px;
+    border-radius: 0px;
+    border-color: transparent;
+  }
+
+  .react-datepicker-wrapper {
+    width: 100%;
+    height: 100%;
   }
 }

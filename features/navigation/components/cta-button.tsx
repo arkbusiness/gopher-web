@@ -1,13 +1,13 @@
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { LinkButton } from "@/components/ui/link-button";
 
 export function CTAButton() {
   return (
-    <Button
-      asChild
+    <LinkButton
+      href="/book-demo"
       className="bg-primary hover:bg-primary/90 transition-colors"
     >
-      <Link href="/book-demo">Book a Demo</Link>
-    </Button>
+      Book a Demo
+    </LinkButton>
   );
 }

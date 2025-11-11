@@ -4,6 +4,8 @@ import NextTopLoader from "nextjs-toploader";
 import { ARK_META } from "@/constants";
 import { Header } from "@/features/navigation";
 import "./globals.css";
+import { Footer } from "@/components/layouts/footer";
+import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
   title: ARK_META.title,
@@ -18,9 +20,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${INTER_CLASS} antialiased`}>
-        <NextTopLoader color="var(--tertiary)" />
+        <NextTopLoader color="var(--primary)" />
         <Header />
-        <main className="relative">{children}</main>
+        <main className="relative max-w-[1728px] mx-auto">{children}</main>
+        <Footer />
+        <Toaster
+          toastOptions={{
+            duration: 6000,
+          }}
+        />
       </body>
     </html>
   );

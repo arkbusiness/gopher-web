@@ -1,0 +1,19 @@
+.heroSlider {
+  :global(.swiper-pagination-bullet) {
+    width: 24px !important;
+    height: 24px !important;
+    background: var(--primary) !important;
+    opacity: 0.4 !important;
+    border-radius: 100px !important;
+    margin: 0 10px !important;
+    transition: all 0.3s ease !important;
+  }
+
+  :global(.swiper-pagination-bullet-active) {
+    width: 90px !important;
+    height: 24px !important;
+    background: var(--primary) !important;
+    border-radius: 100px !important;
+    opacity: 1 !important;
+  }
+}
