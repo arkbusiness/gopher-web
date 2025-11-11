@@ -20,6 +20,7 @@
   --color-primary: var(--primary);
   --color-popover-foreground: var(--popover-foreground);
   --color-popover: var(--popover);
+  --color-ash: var(--ash);
   --color-neutral: var(--neutral);
   --color-neutral-foreground: var(--neutral-foreground);
   --color-highlight: var(--highlight);
@@ -56,6 +57,7 @@
   --secondary-foreground: oklch(0.205 0 0);
   --highlight: #faefe8;
   --highlight-foreground: #535862;
+  --ash: #f6f3f3;
   --warm: #ffebdc;
   --neutral: #cc5500;
   --neutral-foreground: #fff;
@@ -84,6 +86,7 @@
   --neutral: #cc5500;
   --neutral-foreground: #fff;
   --warm: #ffebdc;
+  --ash: #f6f3f3;
   --muted: oklch(0.269 0 0);
   --muted-foreground: oklch(0.708 0 0);
   --accent: oklch(0.269 0 0);

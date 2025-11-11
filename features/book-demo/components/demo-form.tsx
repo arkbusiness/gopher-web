@@ -3,15 +3,17 @@
 import { Container } from "@/components/layouts/container";
 import {
   Button,
-  CustomSelect,
+  DatePicker,
   Input,
   PhoneNumberInput,
   Spinner,
+  TimePicker,
 } from "@/components/ui";
 import { Textarea } from "@/components/ui/form/textarea";
 import { cn } from "@/lib/utils";
 import { errorHandler } from "@/utils";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { formatISO } from "date-fns";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -21,7 +23,7 @@ import {
 } from "react-phone-number-input";
 import * as yup from "yup";
 
-const pricingFormSchema = yup.object().shape({
+const demoFormSchema = yup.object().shape({
   firstName: yup
     .string()
     .required("First name is required")
@@ -52,74 +54,18 @@ const pricingFormSchema = yup.object().shape({
       },
     })
     .required("Phone number is required"),
-  eventDuration: yup
-    .number()
-    .min(1, "Event duration must be at least 1")
-    .required("Event duration is required"),
-  numberOfAttendees: yup.string().required("Number of attendees is required"),
-  numberOfExhibitors: yup.string().required("Number of exhibitors is required"),
+  role: yup.string().required("Role is required"),
+  preferredDate: yup.date().required("Preferred date is required"),
+  preferredTimeSlot: yup.date().required("Preferred time slot is required"),
   message: yup
     .string()
     .required("Message is required")
     .min(10, "Message must be at least 10 characters"),
 });
 
-const LeftStar = () => (
-  <svg
-    width={288}
-    height={380}
-    viewBox="0 0 288 380"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M-42 0L-10 169.5L-287 226.5L-10 270L23.5 380L61 270H287.5L173 187.5L208 40L47 156L-42 0Z"
-      fill="#8F3600"
-      fillOpacity="0.12"
-    />
-  </svg>
-);
+export type DemoFormData = yup.InferType<typeof demoFormSchema>;
 
-const RightStar = () => (
-  <svg
-    width={407}
-    height={402}
-    viewBox="0 0 407 402"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M277 24V191L0 248L277 291.5L310.5 401.5L348 291.5L586.5 248L425.5 177.5L448 0L334 177.5L277 24Z"
-      fill="#8F3600"
-      fillOpacity="0.12"
-    />
-  </svg>
-);
-
-const ATTENDEES_OPTIONS: { value: string; label: string }[] = [
-  { value: "1-50", label: "1-50" },
-  { value: "51-100", label: "51-100" },
-  { value: "101-250", label: "101-250" },
-  { value: "251-500", label: "251-500" },
-  { value: "501-1000", label: "501-1000" },
-  { value: "1001-2500", label: "1001-2500" },
-  { value: "2501-5000", label: "2501-5000" },
-  { value: "5001+", label: "5001+" },
-];
-
-const EXHIBITORS_OPTIONS: { value: string; label: string }[] = [
-  { value: "1-10", label: "1-10" },
-  { value: "11-25", label: "11-25" },
-  { value: "26-50", label: "26-50" },
-  { value: "51-100", label: "51-100" },
-  { value: "101-250", label: "101-250" },
-  { value: "251-500", label: "251-500" },
-  { value: "501+", label: "501+" },
-];
-
-export type PricingFormData = yup.InferType<typeof pricingFormSchema>;
-
-export const PricingForm = () => {
+export const DemoForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {
@@ -129,31 +75,39 @@ export const PricingForm = () => {
     setValue,
     watch,
     reset,
-  } = useForm<PricingFormData>({
-    resolver: yupResolver(pricingFormSchema),
+  } = useForm<DemoFormData>({
+    resolver: yupResolver(demoFormSchema),
     defaultValues: {
       firstName: "",
       lastName: "",
       company: "",
       email: "",
       phoneNumber: "",
-      numberOfAttendees: "",
-      numberOfExhibitors: "",
-      eventDuration: 1,
+      role: "",
+      preferredDate: undefined,
+      preferredTimeSlot: undefined,
       message: "",
     },
   });
 
-  const onSubmit = async (data: PricingFormData) => {
+  const onSubmit = async (data: DemoFormData) => {
     setIsSubmitting(true);
     const formData = {
       ...data,
+      preferredDate: data.preferredDate
+        ? formatISO(data.preferredDate)
+        : undefined,
+      preferredTimeSlot: data.preferredTimeSlot
+        ? formatISO(data.preferredTimeSlot)
+        : undefined,
       phoneNumber: parsePhoneNumber(data.phoneNumber)?.number as string,
     };
     try {
       // Log form data or handle API call here
       console.log("Form submitted:", formData);
-      toast.success("Thank you for your message! We'll get back to you soon.");
+      toast.success(
+        "Thank you for booking a demo! We'll get back to you soon.",
+      );
       reset();
     } catch (error) {
       console.error("Form submission error:", error);
@@ -164,20 +118,24 @@ export const PricingForm = () => {
   };
 
   const watchedPhoneNo = watch("phoneNumber");
-  const watchedNumberOfAttendees = watch("numberOfAttendees");
-  const watchedNumberOfExhibitors = watch("numberOfExhibitors");
+  const watchedDate = watch("preferredDate");
+  const watchedTime = watch("preferredTimeSlot");
   const isLoading = isSubmitting;
 
   return (
-    <section className="w-full py-14.5 bg-warm relative overflow-hidden">
+    <section className="w-full py-14.5 bg-background relative overflow-hidden">
       <Container>
-        <div className="absolute left-0 top-10 opacity-80 pointer-events-none ">
-          <LeftStar />
+        <div className="text-center">
+          <h2 className="text-[clamp(1.75rem,4vw,2.2rem)] font-semibold text-black mb-6">
+            Set up a live demo booking with us
+          </h2>
+          <p className="text-xl text-foreground">
+            Do you have more questions or insight, please drop it using the form
+            below
+          </p>
         </div>
-        <div className="absolute right-0 -bottom-20 opacity-80 pointer-events-none">
-          <RightStar />
-        </div>
-        <div className="max-w-214 mx-auto relative z-10">
+
+        <div className="max-w-120 mx-auto mt-22">
           <form
             onSubmit={handleSubmit(onSubmit)}
             className="flex flex-col gap-6 mx-auto w-full"
@@ -226,26 +184,6 @@ export const PricingForm = () => {
                 </div>
               </div>
 
-              {/* Email */}
-              <div className="flex flex-col gap-1.5">
-                <label
-                  htmlFor="email"
-                  className="text-sm font-medium text-foreground"
-                >
-                  Your email
-                </label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="you@company.com"
-                  {...register("email")}
-                  className={cn("h-12", errors.email && "border-red-500")}
-                />
-                {errors.email && (
-                  <p className="text-sm text-red-500">{errors.email.message}</p>
-                )}
-              </div>
-
               {/* Company */}
               <div className="flex flex-col gap-1.5">
                 <label
@@ -265,6 +203,90 @@ export const PricingForm = () => {
                     {errors.company.message}
                   </p>
                 )}
+              </div>
+
+              {/* Role  */}
+              <div className="flex flex-col gap-1.5">
+                <label
+                  htmlFor="role"
+                  className="text-sm font-medium text-foreground"
+                >
+                  Role / Title
+                </label>
+                <Input
+                  id="role"
+                  placeholder="e.g. Marketing Manager"
+                  {...register("role")}
+                  className={cn("h-12", errors.role && "border-red-500")}
+                />
+                {errors.role && (
+                  <p className="text-sm text-red-500">{errors.role.message}</p>
+                )}
+              </div>
+
+              {/* Email */}
+              <div className="flex flex-col gap-1.5">
+                <label
+                  htmlFor="email"
+                  className="text-sm font-medium text-foreground"
+                >
+                  Business email
+                </label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="you@company.com"
+                  {...register("email")}
+                  className={cn("h-12", errors.email && "border-red-500")}
+                />
+                {errors.email && (
+                  <p className="text-sm text-red-500">{errors.email.message}</p>
+                )}
+              </div>
+
+              {/* Preferred Date and Time Slot Row */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-sm font-medium text-foreground">
+                    Preferred Date
+                  </label>
+                  <DatePicker
+                    name="preferredDate"
+                    value={watchedDate}
+                    placeholderText="Select date"
+                    handleChange={({ value }) => {
+                      setValue("preferredDate", value as Date, {
+                        shouldValidate: true,
+                      });
+                    }}
+                  />
+                  {errors.preferredDate && (
+                    <p className="text-sm text-red-500">
+                      {errors.preferredDate.message}
+                    </p>
+                  )}
+                </div>
+
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-sm font-medium text-foreground">
+                    Preferred Time Slot
+                  </label>
+                  <TimePicker
+                    name="preferredTimeSlot"
+                    value={watchedTime}
+                    placeholderText="Select time"
+                    handleChange={({ value }) => {
+                      setValue("preferredTimeSlot", value as Date, {
+                        shouldValidate: true,
+                      });
+                    }}
+                  />
+                  {errors.preferredTimeSlot && (
+                    <p className="text-sm text-red-500">
+                      {errors.preferredTimeSlot.message}
+                    </p>
+                  )}
+                </div>
               </div>
 
               {/* Phone Number */}
@@ -290,87 +312,6 @@ export const PricingForm = () => {
                     {errors.phoneNumber.message}
                   </p>
                 )}
-              </div>
-
-              {/* Event Duration */}
-              <div className="flex flex-col gap-1.5">
-                <label
-                  htmlFor="eventDuration"
-                  className="text-sm font-medium text-foreground"
-                >
-                  How long is your event (in days)?
-                </label>
-                <Input
-                  id="eventDuration"
-                  type="number"
-                  step="1"
-                  min="1"
-                  placeholder="Event duration"
-                  {...register("eventDuration")}
-                  className={cn(
-                    "h-12",
-                    errors.eventDuration && "border-red-500",
-                  )}
-                />
-                {errors.eventDuration && (
-                  <p className="text-sm text-red-500">
-                    {errors.eventDuration.message}
-                  </p>
-                )}
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="flex flex-col gap-1.5">
-                  <label
-                    htmlFor="numberOfAttendees"
-                    className="text-sm font-medium text-foreground"
-                  >
-                    How many attendees do you expect?
-                  </label>
-                  <CustomSelect
-                    value={watchedNumberOfAttendees}
-                    placeholder="Select..."
-                    options={ATTENDEES_OPTIONS}
-                    handleValueChange={(value) => {
-                      if (value) {
-                        setValue("numberOfAttendees", value, {
-                          shouldValidate: true,
-                        });
-                      }
-                    }}
-                  />
-                  {errors.numberOfAttendees && (
-                    <p className="text-sm text-red-500">
-                      {errors.numberOfAttendees.message}
-                    </p>
-                  )}
-                </div>
-
-                <div className="flex flex-col gap-1.5">
-                  <label
-                    htmlFor="numberOfExhibitors"
-                    className="text-sm font-medium text-foreground"
-                  >
-                    How many exhibitors do you expect?
-                  </label>
-                  <CustomSelect
-                    value={watchedNumberOfExhibitors}
-                    placeholder="Select..."
-                    options={EXHIBITORS_OPTIONS}
-                    handleValueChange={(value) => {
-                      if (value) {
-                        setValue("numberOfExhibitors", value, {
-                          shouldValidate: true,
-                        });
-                      }
-                    }}
-                  />
-                  {errors.numberOfExhibitors && (
-                    <p className="text-sm text-red-500">
-                      {errors.numberOfExhibitors.message}
-                    </p>
-                  )}
-                </div>
               </div>
 
               {/* Message */}
@@ -403,7 +344,7 @@ export const PricingForm = () => {
                 disabled={isSubmitting}
                 className="rounded-[8px]"
               >
-                {isSubmitting ? <Spinner /> : "Get Quote"}
+                {isSubmitting ? <Spinner /> : "Submit"}
               </Button>
             </fieldset>
           </form>
