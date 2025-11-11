@@ -8,7 +8,7 @@ import { DemoCTA } from "@/components/ui";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Solutions | ARK",
+  title: "Solutions | Gopher",
   description: ARK_META.description,
 };
 
