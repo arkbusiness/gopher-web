@@ -1,5 +1,12 @@
 import { Container } from "@/components/layouts/container";
-import { LeftStarSVG, RightStarSVG } from "@/components/ui";
+import {
+  LeftStarSVG,
+  LinkButton,
+  RightCircleIcon,
+  RightStarSVG,
+} from "@/components/ui";
+import { APP_ROUTES } from "@/constants";
+import { CTAButton } from "@/features/navigation";
 
 export const DemoCTA = () => {
   return (
@@ -20,6 +27,18 @@ export const DemoCTA = () => {
               Join hundreds of organizers, exhibitors, and attendees already
               simplifying their events with Gopher
             </p>
+            <div className="mt-10 max-w-[160px] mx-auto">
+              <LinkButton
+                href={APP_ROUTES.bookDemo()}
+                variant="secondary"
+                className="flex items-center"
+              >
+                <span>Book a Demo</span>
+                <span className="flex scale-150 ml-1.5">
+                  <RightCircleIcon />
+                </span>
+              </LinkButton>
+            </div>
           </div>
         </div>
       </Container>
