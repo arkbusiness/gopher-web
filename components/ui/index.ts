@@ -4,3 +4,5 @@ export * from "./dropdown-menu";
 export * from "./link-button";
 export * from "./demo-cta";
 export * from "./accordion";
+export * from "./spinner";
+export * from "./form";
