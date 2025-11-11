@@ -2,3 +2,5 @@ export * from "./button";
 export * from "./icons";
 export * from "./dropdown-menu";
 export * from "./link-button";
+export * from "./demo-cta";
+export * from "./accordion";

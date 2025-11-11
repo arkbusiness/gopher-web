@@ -545,3 +545,35 @@ export const AnalyticsSVG = () => (
     />
   </svg>
 );
+
+export const LeftStarSVG = () => (
+  <svg
+    width={310}
+    height={150}
+    viewBox="0 0 310 202"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M21 -176V-9L-256 48L21 91.5L54.5 201.5L92 91.5L310 48L204 9L239 -138.5L78 -22.5L21 -176Z"
+      fill="#7B3400"
+      fillOpacity="0.41"
+    />
+  </svg>
+);
+
+export const RightStarSVG = () => (
+  <svg
+    width={566}
+    height={150}
+    viewBox="0 0 566 246"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M277 0V167L0 224L277 267.5L310.5 377.5L348 267.5L515 377.5L566 224L460 185L495 37.5L334 153.5L277 0Z"
+      fill="#7B3400"
+      fillOpacity="0.41"
+    />
+  </svg>
+);

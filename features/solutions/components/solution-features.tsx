@@ -53,7 +53,7 @@ export const SolutionFeatures = () => {
   const [nextEl, setNextEl] = useState<HTMLButtonElement | null>(null);
 
   return (
-    <section className="w-full bg-secondary py-16">
+    <section className="w-full bg-neutral py-16">
       <Container>
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col sm:flex-row justify-between items-end mb-6 sm:mb-12 gap-8">

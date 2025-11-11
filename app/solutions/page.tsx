@@ -1,5 +1,10 @@
 import { ARK_META } from "@/constants";
-import { SolutionFeatures, SolutionsHero } from "@/features/solutions";
+import {
+  FAQSection,
+  SolutionFeatures,
+  SolutionsHero,
+} from "@/features/solutions";
+import { DemoCTA } from "@/components/ui";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -12,8 +17,8 @@ export default function SolutionsPage() {
     <>
       <SolutionsHero />
       <SolutionFeatures />
-      {/* <SolutionFeatures />
-      <CTASection /> */}
+      <DemoCTA />
+      <FAQSection />
     </>
   );
 }

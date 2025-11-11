@@ -1,5 +1,1 @@
-export {
-  SolutionsHero,
-  SolutionFeatures,
-  SolutionFeatureCard,
-} from "./components";
+export * from "./components";
