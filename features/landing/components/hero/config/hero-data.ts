@@ -11,14 +11,20 @@ export const HERO_CONTENT: HeroContent = {
 export const HERO_SLIDES: HeroSlide[] = [
   {
     id: "organizer-slide",
-    image: "/1.png",
+    image: "/organizer-slide.webp",
     alt: "Organizers Dashboard",
     title: "Organizers",
   },
   {
     id: "exhibitor-slide",
-    image: "/1.png",
+    image: "/exhibitor-slide.webp",
     alt: "Exhibitors Dashboard",
     title: "Exhibitors",
+  },
+  {
+    id: "attendee-slide",
+    image: "/attendee-slide.webp",
+    alt: "Attendees Dashboard",
+    title: "Attendees",
   },
 ];
