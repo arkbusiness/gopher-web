@@ -23,7 +23,7 @@ export const footerSections: FooterSection[] = [
     title: "SUPPORT",
     links: [
       { label: "FAQs", href: `${APP_ROUTES.solutions()}#faq`, target: "_self" },
-      { label: "Contact Us", href: APP_ROUTES.contact(), target: "_self" },
+      // { label: "Contact Us", href: APP_ROUTES.contact(), target: "_self" },
     ],
   },
   {
